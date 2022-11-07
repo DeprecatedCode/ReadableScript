@@ -1,4 +1,4 @@
-const SEPARATOR = ';'
+const SEPARATOR = ','
 
 function roll(me, appendix, ...stmt) {
  // console.log(me, appendix, ...stmt)
