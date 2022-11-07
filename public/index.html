@@ -1,22 +1,63 @@
 <!doctype html>
 <html>
+
 <head>
  <title>ReadableScript</title>
+ <meta charset="UTF-8">
 </head>
+
 <body>
-<style>
- body { margin: 0 1.5em; background-color: #ed9; }
- body, textarea { font-size: 14px; font-family: monospace; line-height: 1.4; }
- pre { pointer-events: none; z-index: 1; white-space: pre-wrap; }
- textarea { padding: 1em; white-space: pre; }
- textarea, canvas { resize: none; color: #fd0; border: 1px solid #fd0;
-  box-shadow: 0 0 0 2px black; margin: 12px auto; min-height: 480px; min-width: 480px;
-  box-sizing: border-box; background-color: #000; width: 50vw; height: 50vw; }
- h2 { margin: 1em 0; }
- h4 { margin: 0; font-weight: normal; text-decoration: underline; }
-</style>
-<h2>About ReadableScript</h2>
-<pre>Suggested file extension: <strong>*.rjs</strong>
+ <style>
+  body {
+   margin: 0 1.5em;
+   background-color: #ed9;
+  }
+
+  body,
+  textarea {
+   font-size: 14px;
+   font-family: monospace;
+   line-height: 1.4;
+  }
+
+  pre {
+   pointer-events: none;
+   z-index: 1;
+   white-space: pre-wrap;
+  }
+
+  textarea {
+   padding: 1em;
+   white-space: pre;
+  }
+
+  textarea,
+  canvas {
+   resize: none;
+   color: #fd0;
+   border: 1px solid #fd0;
+   box-shadow: 0 0 0 2px black;
+   margin: 12px auto;
+   min-height: 480px;
+   min-width: 480px;
+   box-sizing: border-box;
+   background-color: #000;
+   width: 50vw;
+   height: 50vw;
+  }
+
+  h2 {
+   margin: 1em 0;
+  }
+
+  h4 {
+   margin: 0;
+   font-weight: normal;
+   text-decoration: underline;
+  }
+ </style>
+ <h2>About ReadableScript</h2>
+ <pre>Suggested file extension: <strong>*.rjs</strong>
 
 Summary: ReadableScript is a dialect of JavaScript optimized for its ability to be read out loud by a person.
 
@@ -84,9 +125,9 @@ Currently, the `main` machine defines 23 keywords:
   22  with      any        prefix arguments for each line of code starting with a ' directly below
 </pre>
 
-<h4>Sample ReadableScript code</h4>
+ <h4>Sample ReadableScript code</h4>
 
-<textarea id="code" readonly>
+ <textarea id="code" readonly>
  at document createElement
   call canvas ' name surface ' push
 
@@ -127,55 +168,55 @@ Currently, the `main` machine defines 23 keywords:
   '  '  ' at layer strokeRect ' call
 </textarea>
 
-<h4>Sample code output</h4>
+ <h4>Sample code output</h4>
 
-<script src="./ReadableScript.js"></script>
-<script>
- let ROOM = 'lobby'
- let BOOK = 'basic'
+ <script src="./ReadableScript.js"></script>
+ <script>
+  let ROOM = 'lobby'
+  let BOOK = 'basic'
 
- const BASIC = {
-  define(me, appendix, a, b) {
-   me.engine.rooms[me.room][me.book][a] = b
-  }
- }
-
- const main = {
-  rooms: {
-   [ROOM]: {
-    [BOOK]: BASIC
+  const BASIC = {
+   define(me, appendix, a, b) {
+    me.engine.rooms[me.room][me.book][a] = b
    }
   }
- }
 
- main.me = {
-  engine: main,
-  room: ROOM,
-  book: BOOK,
-  names: { console, document, Math, window },
-  run(subject, code) {
-   subject.out = []
-   // if (window.x++ < 4) console.log('run', JSON.stringify(code))
-   code.map(([ stmt, appendix ]) => {
-    // console.log('RUN STATEMENT', ...stmt)
-    subject.focus = roll(subject, appendix, ...stmt)
-   })
-   return subject.out
-  },
-  stack: [],
-  with: [],
- }
- 
- lang.map(
-  x => roll(main.me, undefined, 'define', ...x)
- )
- 
- main.me.run(main.me, ReadableScript`
+  const main = {
+   rooms: {
+    [ROOM]: {
+     [BOOK]: BASIC
+    }
+   }
+  }
+
+  main.me = {
+   engine: main,
+   room: ROOM,
+   book: BOOK,
+   names: { console, document, Math, window },
+   run(subject, code) {
+    subject.out = []
+    // if (window.x++ < 4) console.log('run', JSON.stringify(code))
+    code.map(([stmt, appendix]) => {
+     // console.log('RUN STATEMENT', ...stmt)
+     subject.focus = roll(subject, appendix, ...stmt)
+    })
+    return subject.out
+   },
+   stack: [],
+   with: [],
+  }
+
+  lang.map(
+   x => roll(main.me, undefined, 'define', ...x)
+  )
+
+  main.me.run(main.me, ReadableScript`
   at document getElementById
     call code ' name source
   at source value ' run
  `)
-</script>
+ </script>
 </body>
-</html>
 
+</html>

@@ -174,7 +174,7 @@ const lang = [
  [
   "run",
   (me) => {
-   return me.run(me, rjs([me.focus]))
+   return me.run(me, ReadableScript([me.focus]))
   },
  ],
  [
