@@ -51,55 +51,80 @@
   }
 
   h4 {
-   margin: 0;
-   font-weight: normal;
-   text-decoration: underline;
+   margin: 1em 0 0;
+   font-weight: bold;
+   border-bottom: 2px solid;
+   display: inline-block;
   }
  </style>
  <h2>About ReadableScript</h2>
- <pre>Suggested file extension: <strong>*.rjs</strong>
+ <p>Suggested file extension: <strong>*.rjs</strong></p>
 
-Summary: ReadableScript is a dialect of JavaScript optimized for its ability to be read out loud by a person.
+ <p>Summary: ReadableScript is a dialect of JavaScript optimized for its ability to be read out loud by a person.</p>
 
-<h4>Project status</h4>
-<a href="./version-2022-05-16.html">May 16 2022</a>: ReadableScript is in DRAFT status and is not yet production-ready.
-Nov 7 2022: Script updated.
+ <div>
+  <h4>Project status</h4>
+ </div>
+ <p><a href="./version-2022-05-16.html">May 16 2022</a>: ReadableScript is in DRAFT status and is not yet
+  production-ready.</p>
+ <p>Nov 7 2022: Replaced single quote (') with semicolon (;)</p>
 
-<h4>Copyright and license</h4>
-This document, and all code contained herein are hereby released into the public domain by the author, without any guarantee or implied fitness for any particular purpose. You are free to copy, sell, use this code in commercial or personal projects. You are not required to include any notice in your projects as this code is in the public domain.
+ <div>
+  <h4>Copyright and license</h4>
+ </div>
+ <p>This document, and all code contained herein are hereby released into the public domain by the author, without any
+  guarantee or implied fitness for any particular purpose. You are free to copy, sell, use this code in commercial or
+  personal projects. You are not required to include any notice in your projects as this code is in the public domain.
+ </p>
 
-<h4>Synopsis</h4>
-Have you ever tried to read code out loud to someone? Depending on the programming language, this isn't the simplest of tasks. Reading a for loop, in JavaScript `for (const o of x) { }` could be read as "for left parenthesis const o of x right parenthesis left curly brace right curly brace". That's a lot to express verbally. This led me to wonder, is it possible to make a programming language that uses no or very few syntax symbols?
+ <div>
+  <h4>Synopsis</h4>
+ </div>
+ <p>Have you ever tried to read code out loud to someone? Depending on the programming language, this isn't the simplest
+  of tasks. Reading a for loop, in JavaScript `for (const o of x) { }` could be read as "for left parenthesis const o of
+  x right parenthesis left curly brace right curly brace". That's a lot to express verbally. This led me to wonder, is
+  it possible to make a programming language that uses no or very few syntax symbols?</p>
 
-Yes - I discovered, one can substitute the complex symbols commonly found in programming languages with a set of keywords. This makes the language easier to express to another person over an audio connection, such as a telephone call, internet meeting, or in person. The two symbols I chose to preserve, to aid readability are:
+ <p>Yes - I discovered, one can substitute the complex symbols commonly found in programming languages with a set of
+  keywords. This makes the language easier to express to another person over an audio connection, such as a telephone
+  call, internet meeting, or in person. The two symbols I chose to preserve, to aid readability are:</p>
 
+ <pre>
  # the hash sign, to add a comment: code following a hash sign will have no effect
- ' the single quote mark, representing a block when used at the start of a line, or a line separator otherwise
+ ; the semicolon, representing a block when used at the start of a line, or a line separator otherwise
+</pre>
 
-<h4>The language</h4>
-The language is most similar to assembly in syntax, with one command per line of code (although ' multiple ' lines ' can ' be ' simulated ' with ' single ' quotes). We can express a programming grammar using uppercase letters, and [ and ] to desginate optionality. The statement format is then (any number of arguments is possible, for brevity I only show 3):
-
+ <div>
+  <h4>The language</h4>
+ </div>
+ <p>The language is most similar to assembly in syntax, with one command per line of code (although ; multiple ; lines ;
+  can ; be ; simulated ; with ; semicolons). We can express a programming grammar using uppercase letters, and [ and ]
+  to desginate optionality. The statement format is then (any number of arguments is possible, for brevity I only show
+  3):</p>
+ <pre>
  KEYWORD [ARGUMENT [ARGUMENT [ARGUMENT]]]
+</pre>
+ <p>Spaces beyond a single space between keywords and arguments are optional, and have no effect.</p>
 
-Spaces beyond a single space between keywords and arguments are optional, and have no effect.
-
-<h4>The machine</h4>
-The machine runs your code, and it is responsible for defining the keywords that it understands.
-
+ <div>
+  <h4>The machine</h4>
+ </div>
+ <p>The machine runs your code, and it is responsible for defining the keywords that it understands.</p>
+ <pre>
 Core concepts:
 
  a "focus" - the machine has an implicit focused value at all times, this can be any JavaScript
              value or function
- blocks    - code can be attached to a statement by starting the next line with a single quote (')
+ blocks    - code can be attached to a statement by starting the next line with a semicolon (;)
 
 Currently, the `main` machine defines 23 keywords:
 
-  ' # add and at call divide eq false log mod multiply name
+  ; # add and at call divide eq false log mod multiply name
   or out plain push repeat run set subtract true with
 
   ID  NAME      ARGUMENTS  DESCRIPTION
 
-   0  '         any        a nested block, to be used by the line immediately preceding the block         
+   0  ;         any        a nested block, to be used by the line immediately preceding the block         
    1  #         any        a comment, meaning the line has no effect
    2  add       number     adds argument 0 to focus
    3  and       none       combines all sub block 'out' values with logical boolean and
@@ -123,53 +148,57 @@ Currently, the `main` machine defines 23 keywords:
   19  set       text any   set variable value
   20  subtract  number     subtracts argument 0 from focus
   21  true      any        run the attached code block if focus is true
-  22  with      any        prefix arguments for each line of code starting with a ' directly below
+  22  with      any        prefix arguments for each line of code starting with a ; directly below
 </pre>
 
- <h4>Sample ReadableScript code</h4>
+ <div>
+  <h4>Sample ReadableScript code</h4>
+ </div>
 
  <textarea id="code" readonly>
  at document createElement
-  call canvas ' name surface ' push
+  call canvas ; name surface ; push
 
  at document body appendChild
   call
 
  at surface clientHeight
   name surface height
-  divide 40 ' push ' at Math floor ' call ' name cellsY
+  divide 40 ; push ; at Math floor ; call ; name cellsY
 
  at surface clientWidth
   name surface width
-  divide 40 ' push ' at Math floor ' call ' name cellsX
+  divide 40 ; push ; at Math floor ; call ; name cellsX
 
  at surface getContext
-  call 2d ' name layer
+  call 2d ; name layer
 
  set layer fillStyle   #fd0
  set layer strokeStyle #fd0
 
  repeat cellsY cellY
-  ' repeat cellsX cellX
-  '  '
-  '  ' and
-  '  '  ' at cellX ' mod 4 ' eq 0 ' out
-  '  '  ' at cellY ' mod 4 ' eq 0 ' out
-  '  '
-  '  ' true
-  '  '  ' at cellX ' multiply 40 ' add 18 ' push
-  '  '  ' at cellY ' multiply 40 ' add 18 ' push
-  '  '  ' plain 8 ' push ' push
-  '  '  ' at layer fillRect ' call
-  '  '
-  '  ' false
-  '  '  ' at cellX ' multiply 40 ' add 20 ' push
-  '  '  ' at cellY ' multiply 40 ' add 20 ' push
-  '  '  ' plain 4 ' push ' push
-  '  '  ' at layer strokeRect ' call
+  ; repeat cellsX cellX
+  ;  ;
+  ;  ; and
+  ;  ;  ; at cellX ; mod 4 ; eq 0 ; out
+  ;  ;  ; at cellY ; mod 4 ; eq 0 ; out
+  ;  ;
+  ;  ; true
+  ;  ;  ; at cellX ; multiply 40 ; add 18 ; push
+  ;  ;  ; at cellY ; multiply 40 ; add 18 ; push
+  ;  ;  ; plain 8 ; push ; push
+  ;  ;  ; at layer fillRect ; call
+  ;  ;
+  ;  ; false
+  ;  ;  ; at cellX ; multiply 40 ; add 20 ; push
+  ;  ;  ; at cellY ; multiply 40 ; add 20 ; push
+  ;  ;  ; plain 4 ; push ; push
+  ;  ;  ; at layer strokeRect ; call
 </textarea>
 
- <h4>Sample code output</h4>
+ <div>
+  <h4>Sample code output</h4>
+ </div>
 
  <script src="./ReadableScript.js"></script>
  <script>
@@ -214,8 +243,8 @@ Currently, the `main` machine defines 23 keywords:
 
   main.me.run(main.me, ReadableScript`
   at document getElementById
-    call code ' name source
-  at source value ' run
+    call code ; name source
+  at source value ; run
  `)
  </script>
 </body>

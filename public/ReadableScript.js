@@ -1,3 +1,5 @@
+const SEPARATOR = ';'
+
 function roll(me, appendix, ...stmt) {
  // console.log(me, appendix, ...stmt)
  if (me.focus instanceof Error) {
@@ -225,7 +227,7 @@ function blocks(arr) {
  // console.log('formatting', JSON.stringify(arr))
  return arr.reduce(
   (slurp, line) => {
-   if (line[0] === "'") {
+   if (line[0] === SEPARATOR) {
     if (slurp.lines.length === 0) {
      slurp.lines.push([, []])
     }
@@ -235,7 +237,7 @@ function blocks(arr) {
     }
     top[1].push(line.slice(1))
    } else {
-    slurp.lines.push(...split(line, "'"))
+    slurp.lines.push(...split(line, SEPARATOR))
     // console.log('added new lines', JSON.stringify(slurp.lines.slice()))
    }
    return slurp
